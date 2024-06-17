@@ -1,9 +1,1 @@
 <!--pages/login/login.wxml-->
-<navigation-bar title="登录" back="{{false}}" color="black" background="#FFF"></navigation-bar>
-<mp-dialog title="test" show="{{true}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
-    <view>test content</view>
-</mp-dialog>
-<mp-badge content="2"></mp-badge>
-                                 
-
-                                                                                                                                          
