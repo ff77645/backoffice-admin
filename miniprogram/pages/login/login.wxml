@@ -21,7 +21,7 @@
       password
     ></van-field>
     </view>
-    <van-button bind:tap="onLoging" class="self-end" loading="{{isLoading}}" type="info" loading-type="spinner" size="large" >
+    <van-button bind:tap="onLoging" class="self-end" loading="{{isLoading}}" type="info" loading-type="spinner" size="large" block >
       登录
     </van-button>
   </view>

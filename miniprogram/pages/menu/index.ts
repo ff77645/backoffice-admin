@@ -21,6 +21,38 @@ Page({
       },
     ],
     colNum:4,
+    treeData:[
+      {
+        title:'1',
+        children:[
+          {
+            title:'1-1',
+            children:[
+              {
+                title:'1-1-1'
+              },
+              {
+                title:'1-1-2'
+              },
+            ]
+          },
+          {
+            title:'1-2'
+          },
+        ]
+      },
+      {
+        title:'2',
+        children:[
+          {
+            title:'2-1'
+          },
+          {
+            title:'2-2'
+          },
+        ]
+      }
+    ]
   },
 
 })

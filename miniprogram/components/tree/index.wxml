@@ -1,0 +1,14 @@
+<view>
+  <view wx:for="{{nodes}}" wx:key="{{item.title}}" class="">
+    <view class="flex mb-3 flex-row flex-nowrap items-stretch">
+      <label class="flex gap-3 ">
+        <checkbox checked="{{item.checked}}"></checkbox>
+        <text >{{item.title}}</text>
+      </label>
+      <view class="flex-1" bind:tap="onToggle"></view>
+    </view>
+    <view class="ml-3" wx:if="{{show && item.children && item.children.length}}">
+      <tree nodes="{{item.children}}"></tree>
+    </view>
+  </view>
+</view>

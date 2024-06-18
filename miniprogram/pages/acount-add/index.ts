@@ -3,7 +3,7 @@ import { areaList } from '@vant/area-data'
 
 Page({
   data:{
-    nickname:'',
+    username:'',
     password:'',
     phone:'',
     address:'',
@@ -14,6 +14,7 @@ Page({
     areaList,
     showArea:false,
     showUpload:true,
+    addressDetail:'',
     fileList:[]
   },
   navBack(){
@@ -21,7 +22,9 @@ Page({
   },
   selectAreaConfirm({detail}:any){
     console.log({detail});
-    
+    const area_code = detail.values[2].code
+    const address = detail.values.map((i:any)=>i.name).join('')
+    this.setData({address,area_code,showArea:false})
   },
   selectAreaCancle(){
     this.setData({

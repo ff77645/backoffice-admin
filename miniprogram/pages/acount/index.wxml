@@ -45,9 +45,10 @@
   show="{{ showMenu }}"
   position="top"
   bind:close="closeMenu"
+  round
 >
   <van-nav-bar border="{{false}}"/>
-  <van-grid column-num="{{4}}" use-slot clickable>
+  <van-grid column-num="{{4}}" use-slot clickable border="{{false}}">
     <van-grid-item url="/pages/acount-add/index">
       <text slot="text">添加账户</text>
       <mp-icon slot="icon" icon="add-friends" color="black" size="{{22}}"></mp-icon>

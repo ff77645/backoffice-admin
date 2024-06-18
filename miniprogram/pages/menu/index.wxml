@@ -2,10 +2,10 @@
   title="菜单"
 />
 <scroll-view 
-  class="scrollable bg-slate-50" 
+  class="scrollable bg-slate-50 px-4 py-3" 
   scroll-y
 >
-  <view class="p-4 ">
+  <view class="bg-white rounded-lg pt-4">
     <view class="mb-2 font-medium text-sm px-3">系统菜单</view>
     <van-grid column-num="{{colNum}}" clickable border="{{false}}">
       <van-grid-item 
@@ -18,4 +18,5 @@
       />
     </van-grid>
   </view>
+  <tree nodes="{{treeData}}"></tree>
 </scroll-view>
