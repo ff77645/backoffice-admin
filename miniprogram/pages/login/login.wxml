@@ -1,1 +1,28 @@
-<!--pages/login/login.wxml-->
+<van-nav-bar
+  title="账号登录"
+  border="{{false}}"
+/>
+<scroll-view 
+  class="scrollable" 
+  scroll-y
+>
+  <view class="p-8 h-full flex flex-col justify-between">
+    <view></view>
+    <view >
+      <van-field
+      model:value="{{ username }}"
+      label="账号"
+      placeholder="请输入账号"
+    ></van-field>
+    <van-field
+      model:value="{{ password }}"
+      label="密码"
+      placeholder="请输入密码"
+      password
+    ></van-field>
+    </view>
+    <van-button bind:tap="onLoging" class="self-end" loading="{{isLoading}}" type="info" loading-type="spinner" size="large" >
+      登录
+    </van-button>
+  </view>
+</scroll-view>

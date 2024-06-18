@@ -1,0 +1,56 @@
+<van-nav-bar
+  title="账号管理"
+  left-arrow
+  bind:click-left="navBack"
+/>
+<view class="flex items-center" >
+  <view class="flex-1" >
+    <van-search 
+      value="{{ searchVal }}" 
+      placeholder="请输入搜索关键词"
+      shape="round"
+      bind:search="onSerch"
+    />
+  </view>
+  <view class="pr-3">
+    <van-icon name="apps-o" size="20px" bind:tap="openMenu" />
+  </view>
+</view>
+<scroll-view 
+  class="scrollable bg-slate-50" 
+  scroll-y
+>
+  <view class="h-2"></view>
+  <van-cell-group>
+  <mp-slideview
+    wx:for="{{10}}" 
+    wx:key="index"
+    right-width="{{ 150 }}"
+    buttons="{{[{text:'续费',extClass:'color-info',data:index},{text:'日志',extClass:'color-primary'},{text:'删除',type:'warn'}]}}"
+    bind:buttontap="bindbuttontap"
+  >
+    <van-cell 
+      use-label-slot
+    >
+      <view slot="title" class="">张三的账号</view>
+      <view slot="label" class="flex items-center gap-2">
+        <van-tag plain type="primary">餐饮会员</van-tag>
+        <view class="text-sm">到期时间:2024/10/12</view>
+      </view>
+    </van-cell>
+  </mp-slideview>
+  </van-cell-group>
+</scroll-view>
+<van-popup 
+  show="{{ showMenu }}"
+  position="top"
+  bind:close="closeMenu"
+>
+  <van-nav-bar border="{{false}}"/>
+  <van-grid column-num="{{4}}" use-slot clickable>
+    <van-grid-item url="/pages/acount-add/index">
+      <text slot="text">添加账户</text>
+      <mp-icon slot="icon" icon="add-friends" color="black" size="{{22}}"></mp-icon>
+    </van-grid-item>
+  </van-grid>
+</van-popup>

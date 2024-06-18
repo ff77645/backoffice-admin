@@ -28,6 +28,7 @@
     "node_modules"
   ],
   "paths": {
-    "tdesign-miniprogram/*":["./miniprogram/miniprogram_npm/tdesign-miniprogram/*"]
+    "tdesign-miniprogram/*":["node_modules/tdesign-miniprogram/*"],
+    "@vant/weapp/*": ["node_modules/@vant/weapp/dist/*"]
   }
 }

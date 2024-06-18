@@ -5,8 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    skylineRender: true,
-    buttons: [{text: '取消'}, {text: '确认'}]
+    username:'',
+    password:'',
+    isLoading:false
+  },
+
+  onLoging(){
+    console.log(123);
+    
+    wx.navigateTo({
+      url:'/pages/menu/index'
+    })
   },
 
   /**

@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/menu/index",
+    "pages/acount/index", 
+    "pages/acount-add/index", 
     "pages/index/index",
     "pages/logs/logs"
   ],
@@ -8,14 +11,15 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
-  "style": "v2",
-  "renderer": "skyline",
-  "useExtendedLib": {
+  "useExtendedLib":{
     "weui": true
   },
+  "style":"v2",
+  "renderer": "webview",
   "rendererOptions": {
     "skyline": {
       "defaultDisplayBlock": true,
+      "defaultContentBox":true,
       "disableABTest": true,
       "sdkVersionBegin": "3.0.0",
       "sdkVersionEnd": "15.255.255"
@@ -25,7 +29,22 @@
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {
-    "mp-dialog": "weui-miniprogram/dialog/dialog",
-    "mp-badge": "weui-miniprogram/badge/badge"
+    "scrollable":"/components/scrollable/index",
+    "mp-icon": "weui-miniprogram/icon/icon",
+    "mp-slideview": "weui-miniprogram/slideview/slideview",
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-grid": "@vant/weapp/grid/index",
+    "van-grid-item": "@vant/weapp/grid-item/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-search": "@vant/weapp/search/index",
+    "van-tag": "@vant/weapp/tag/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-swipe-cell": "@vant/weapp/swipe-cell/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-area": "@vant/weapp/area/index",
+    "van-uploader": "@vant/weapp/uploader/index"
   }
 }

@@ -1,0 +1,21 @@
+<van-nav-bar
+  title="菜单"
+/>
+<scroll-view 
+  class="scrollable bg-slate-50" 
+  scroll-y
+>
+  <view class="p-4 ">
+    <view class="mb-2 font-medium text-sm px-3">系统菜单</view>
+    <van-grid column-num="{{colNum}}" clickable border="{{false}}">
+      <van-grid-item 
+        wx:for="{{systemMenuList}}"  
+        wx:key="index"
+        icon="{{item.icon}}" 
+        text="{{item.title}}"
+        url="{{item.path}}"
+        link-type="navigateTo"
+      />
+    </van-grid>
+  </view>
+</scroll-view>

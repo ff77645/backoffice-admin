@@ -4,5 +4,32 @@
   "setting": {
     "compileHotReLoad": true,
     "preloadBackgroundData": false
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/acount-add/index",
+          "pathName": "pages/acount-add/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/acount/index",
+          "pathName": "pages/acount/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/menu/index",
+          "pathName": "pages/menu/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
   }
 }

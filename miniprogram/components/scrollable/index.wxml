@@ -1,0 +1,3 @@
+<scroll-view class="scrollable" scroll-y>
+  <slot></slot>
+</scroll-view>
