@@ -52,10 +52,12 @@
     <van-field
       model:value="{{authName}}"
       label="权限名称"
+      placeholder="请输入权限名称"
     />
     <van-field
       model:value="{{authCode}}"
       label="权限标识"
+      placeholder="请输入权限标识"
     />
   </van-cell-group>
 </van-dialog>
