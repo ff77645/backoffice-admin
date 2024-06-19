@@ -1,5 +1,5 @@
 <van-nav-bar
-  title="账号管理"
+  title="角色管理"
   left-arrow
   bind:click-left="navBack"
 />
@@ -25,17 +25,16 @@
     <mp-slideview
       wx:for="{{10}}" 
       wx:key="index"
-      right-width="{{ 150 }}"
-      buttons="{{[{text:'续费',extClass:'color-info',data:index},{text:'日志',extClass:'color-primary'},{text:'删除',type:'warn'}]}}"
+      right-width="{{ 100 }}"
+      buttons="{{[{text:'修改',extClass:'color-info',data:index},{text:'删除',type:'warn'}]}}"
       bind:buttontap="bindbuttontap"
     >
       <van-cell 
         use-label-slot
       >
-        <view slot="title" class="">张三的账号</view>
+        <van-tag slot="title" plain type="primary">餐饮会员</van-tag>
         <view slot="label" class="flex items-center gap-2">
-          <van-tag plain type="primary">餐饮会员</van-tag>
-          <view class="text-sm">到期时间:2024/10/12</view>
+          <view class="text-sm">创建时间:2024/10/12</view>
         </view>
       </van-cell>
     </mp-slideview>
@@ -49,8 +48,8 @@
 >
   <van-nav-bar border="{{false}}"/>
   <van-grid column-num="{{4}}" use-slot clickable border="{{false}}">
-    <van-grid-item url="/pages/acount-add/index">
-      <text slot="text">添加账户</text>
+    <van-grid-item url="/pages/role-add/index">
+      <text slot="text">添加角色</text>
       <mp-icon slot="icon" icon="add-friends" color="black" size="{{22}}"></mp-icon>
     </van-grid-item>
   </van-grid>

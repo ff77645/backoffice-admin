@@ -1,0 +1,50 @@
+<van-nav-bar
+  title="{{title}}"
+  left-arrow
+  bind:click-left="navBack"
+/>
+<scroll-view 
+  class="scrollable bg-slate-50" 
+  scroll-y
+>
+  <view class="h-3"></view>
+  <van-cell-group inset>
+    <van-field
+      required
+      model:value="{{ role_name }}"
+      label="角色名称"
+      placeholder="请输入角色名称"
+    />
+    <van-field
+      required
+      model:value="{{ role_sign }}"
+      label="角色标识"
+      placeholder="请输入角色标识"
+    />
+    <van-field
+      model:value="{{ sort }}"
+      label="排序"
+      type="number"
+    />
+    <van-field
+      model:value="{{ describe }}"
+      label="备注"
+      type="textarea"
+      placeholder="描述一下~~"
+    />
+  </van-cell-group>
+  <van-cell-group title="权限" border="{{false}}" inset>
+    <view class="bg-white flex flex-wrap gap-2 px-4 py-3">
+      <van-tag size="medium" plain closeable type="warning">标签</van-tag>
+      <van-tag size="medium" plain closeable type="warning">标签</van-tag>
+      <van-tag size="medium" plain closeable type="warning">标签</van-tag>
+      <van-tag size="medium" plain closeable type="warning">标签</van-tag>
+      <van-button plain icon="plus" size="mini" bind:click="editAuto">编辑</van-button>
+    </view>
+  </van-cell-group>
+</scroll-view>
+<view class="flex justify-between px-4 py-3 box-border gap-4">
+  <van-button bind:click="navBack" class="flex-1" custom-style="width:100%">取消</van-button> 
+  <van-button class="flex-1" type="primary" custom-style="width:100%">确定</van-button>
+</view>
+<view class="safe-area-inset-bottom"></view>

@@ -19,7 +19,12 @@
     "lib": ["ES2020"],
     "typeRoots": [
       "./typings"
-    ]
+    ],
+    "types": ["miniprogram-api-typings"],
+    "paths": {
+      "tdesign-miniprogram/*":["./node_modules/tdesign-miniprogram/*"],
+      "@vant/weapp/*": ["./node_modules/@vant/weapp/dist/*"]
+    }
   },
   "include": [
     "./**/*.ts"
@@ -28,7 +33,7 @@
     "node_modules"
   ],
   "paths": {
-    "tdesign-miniprogram/*":["node_modules/tdesign-miniprogram/*"],
-    "@vant/weapp/*": ["node_modules/@vant/weapp/dist/*"]
+    "tdesign-miniprogram/*":["./node_modules/tdesign-miniprogram/*"],
+    "@vant/weapp/*": ["./node_modules/@vant/weapp/dist/*"]
   }
 }

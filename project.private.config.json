@@ -9,6 +9,38 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/role-auth/index",
+          "pathName": "pages/role-auth/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
+        },
+        {
+          "name": "pages/role-add/index",
+          "pathName": "pages/role-add/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/role/index",
+          "pathName": "pages/role/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/auth/index",
+          "pathName": "pages/auth/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/acount-add/index",
           "pathName": "pages/acount-add/index",
           "query": "",

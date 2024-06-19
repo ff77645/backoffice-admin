@@ -2,6 +2,10 @@
   "pages": [
     "pages/login/login",
     "pages/menu/index",
+    "pages/auth/index",
+    "pages/role/index",
+    "pages/role-add/index",
+    "pages/role-auth/index",
     "pages/acount/index", 
     "pages/acount-add/index", 
     "pages/index/index",
@@ -24,7 +28,6 @@
       "sdkVersionEnd": "15.255.255"
     }
   },
-  "style":"v2",
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
@@ -45,6 +48,8 @@
     "van-swipe-cell": "@vant/weapp/swipe-cell/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-area": "@vant/weapp/area/index",
-    "van-uploader": "@vant/weapp/uploader/index"
+    "van-uploader": "@vant/weapp/uploader/index",
+    "van-tree-select": "@vant/weapp/tree-select/index",
+    "van-dialog": "@vant/weapp/dialog/index"
   }
 }

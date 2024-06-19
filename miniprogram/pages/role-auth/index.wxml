@@ -1,0 +1,24 @@
+<van-nav-bar
+  title="角色权限"
+  left-arrow
+  bind:click-left="navBack"
+/>
+<scroll-view 
+  class="scrollable bg-slate-50" 
+  scroll-y
+>
+  <van-tree-select
+    class="h-full"
+    height="100%"
+    items="{{ items }}"
+    main-active-index="{{ mainActiveIndex }}"
+    active-id="{{ activeId }}"
+    bind:click-nav="onClickNav"
+    bind:click-item="onClickItem"
+  />
+</scroll-view>
+<view class="flex justify-between px-4 py-3 box-border gap-4">
+  <van-button bind:click="navBack" class="flex-1" custom-style="width:100%">取消</van-button> 
+  <van-button class="flex-1" type="primary" custom-style="width:100%">确定</van-button>
+</view>
+<view class="safe-area-inset-bottom"></view>

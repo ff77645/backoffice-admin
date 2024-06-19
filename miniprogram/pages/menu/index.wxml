@@ -18,5 +18,5 @@
       />
     </van-grid>
   </view>
-  <tree nodes="{{treeData}}"></tree>
+  
 </scroll-view>

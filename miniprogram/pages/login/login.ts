@@ -11,11 +11,12 @@ Page({
   },
 
   onLoging(){
-    console.log(123);
-    
-    wx.navigateTo({
-      url:'/pages/menu/index'
-    })
+    this.setData({isLoading:true})
+    setTimeout(()=>{
+      wx.navigateTo({
+        url:'/pages/menu/index'
+      })
+    },1000)
   },
 
   /**

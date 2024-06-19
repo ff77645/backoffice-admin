@@ -1,5 +1,5 @@
 <view>
-  <view wx:for="{{nodes}}" wx:key="{{item.title}}" class="">
+  <view wx:for="{{nodes}}" wx:key="title" class="">
     <view class="flex mb-3 flex-row flex-nowrap items-stretch">
       <label class="flex gap-3 ">
         <checkbox checked="{{item.checked}}"></checkbox>
