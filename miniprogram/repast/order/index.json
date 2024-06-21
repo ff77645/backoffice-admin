@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "group":"./group/index"
+  }
+}

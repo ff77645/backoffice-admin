@@ -3,7 +3,7 @@
   "name": "backoffice",
   "version": "0.0.2",
   "mini-android": {
-    "sdkVersion": "1.2.9",
+    "sdkVersion": "1.3.19",
     "toolkitVersion": "0.10.0",
     "useExtendedSdk": {
       "media": false,
@@ -28,11 +28,12 @@
       "enable": true
     },
     "abi": {
-      "arm64-v8a": true
+      "arm64-v8a": true,
+      "armeabi-v7a": false
     }
   },
   "mini-ios": {
-    "sdkVersion": "1.2.13",
+    "sdkVersion": "1.3.28",
     "toolkitVersion": "0.0.9",
     "useExtendedSdk": {
       "WeAppOpenFuns": true,

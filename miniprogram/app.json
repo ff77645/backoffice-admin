@@ -11,6 +11,14 @@
     "pages/index/index",
     "pages/logs/logs"
   ],
+  "subpackages":[
+    {
+      "root":"repast",
+      "pages":[
+        "order/index"
+      ]
+    }
+  ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
@@ -50,6 +58,7 @@
     "van-area": "@vant/weapp/area/index",
     "van-uploader": "@vant/weapp/uploader/index",
     "van-tree-select": "@vant/weapp/tree-select/index",
-    "van-dialog": "@vant/weapp/dialog/index"
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-notice-bar": "@vant/weapp/notice-bar/index"
   }
 }

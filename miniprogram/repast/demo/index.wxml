@@ -1,0 +1,11 @@
+<van-nav-bar
+  title="title"
+  left-arrow
+  bind:click-left="navBack"
+/>
+<scroll-view 
+  class="scrollable bg-slate-50" 
+  scroll-y
+>
+
+</scroll-view>

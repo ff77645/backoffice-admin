@@ -1,0 +1,7 @@
+<view class="px-4 group">
+  <view class="text-sm text-gray-500">{{data.title}}</view>
+  <view wx:for="{{data.children}}" wx:key="index" class="py-3">
+    <view class=" text-gray-900">{{item.title}}</view>
+    <view class="text-gray-600 text-sm">{{item.describe}}</view>
+  </view>
+</view>

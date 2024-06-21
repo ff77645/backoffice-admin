@@ -9,6 +9,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "点餐",
+          "pathName": "repast/order/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/role-auth/index",
           "pathName": "pages/role-auth/index",
           "query": "",
