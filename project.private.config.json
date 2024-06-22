@@ -9,6 +9,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "repast/checkout/index",
+          "pathName": "repast/checkout/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "点餐",
           "pathName": "repast/order/index",
           "query": "",

@@ -1,0 +1,43 @@
+<van-nav-bar
+  title="订单确认"
+  left-arrow
+  bind:click-left="navBack"
+/>
+<scroll-view 
+  class="scrollable bg-slate-50" 
+  scroll-y
+>
+  <!-- 地址 -->
+  <view class="px-4 py-2">
+    <view class="font-bold">收货地址</view>
+  </view>
+
+  <!-- 商品 -->
+   <collapse title="商品列表" defaultExpanded>
+    <view class="px-4 py-3 bg-white">
+      <view wx:for="{{goodsList}}" wx:key="index" class="py-3">
+        <view class=" text-gray-900">{{item.title}}</view>
+        <view class="text-gray-600 text-sm">{{item.describe}}</view>
+        <view class="flex justify-between items-center">
+          <view class="text-red-500 font-bold">￥{{item.price / 100}}</view>
+          <van-stepper wx:if="{{item.number}}" integer step="{{1}}" min="{{0}}" input-width="24" button-size="18" theme="round" value="{{ item.number }}" bind:change="onChange" data-id="{{item.id}}" data-index="{{index}}" />
+          <van-icon wx:else name="add" color="#ee0a24" data-id="{{item.id}}" data-index="{{index}}" size="20" bind:click="onAdd"></van-icon>
+        </view>
+      </view>
+    </view>
+  </collapse>
+
+<!-- 支付方式 -->
+  <view class="px-4 py-2">
+    <view class="font-bold">支付方式</view>
+  </view>
+</scroll-view>
+<view style="height:50px;"></view>
+<van-submit-bar
+  disabled="{{false}}"
+  price="{{ sumer_price }}"
+  button-text="支付"
+>
+  <!-- <van-icon bind:click="toggleCheckedModel" info="{{checkedNumber ||''}}" size="32" name="bag-o" color="var(--button-danger-background-color,#ee0a24)" /> -->
+</van-submit-bar>
+<view class="safe-area-inset-bottom"></view>

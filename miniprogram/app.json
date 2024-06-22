@@ -15,7 +15,8 @@
     {
       "root":"repast",
       "pages":[
-        "order/index"
+        "order/index",
+        "checkout/index"
       ]
     }
   ],
@@ -61,6 +62,8 @@
     "van-dialog": "@vant/weapp/dialog/index",
     "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-stepper": "@vant/weapp/stepper/index",
-    "van-submit-bar": "@vant/weapp/submit-bar/index"
+    "van-submit-bar": "@vant/weapp/submit-bar/index",
+    "van-collapse": "@vant/weapp/collapse/index",
+  "van-collapse-item": "@vant/weapp/collapse-item/index"
   }
 }
