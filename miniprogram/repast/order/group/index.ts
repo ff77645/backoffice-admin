@@ -13,11 +13,33 @@ Component({
       wx.createIntersectionObserver(this).relativeTo('.goods-list').relativeToViewport().observe('.group',(res)=>{
         console.log(this.data.data.title,res);
       })
+    },
+    initOffset(){
+      this.createSelectorQuery().select('.group').boundingClientRect(res=>{
+        console.log({res});
+      }).exec()
+    },
+    onChange({detail,target}:any){
+      this.triggerEvent('change-num',{
+        id:target.dataset.id,
+        category_id:this.data.data.id,
+        index:target.dataset.index,
+        value:detail,
+      })
+    },
+    onAdd({target}:any){
+      this.triggerEvent('change-num',{
+        id:target.dataset.id,
+        category_id:this.data.data.id,
+        index:target.dataset.index,
+        value:1,
+      })
     }
   },
   lifetimes:{
     attached(){
       // this.initObserver()
+      this.initOffset()
     }
   }
 })

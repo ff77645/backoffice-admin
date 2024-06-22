@@ -59,6 +59,8 @@
     "van-uploader": "@vant/weapp/uploader/index",
     "van-tree-select": "@vant/weapp/tree-select/index",
     "van-dialog": "@vant/weapp/dialog/index",
-    "van-notice-bar": "@vant/weapp/notice-bar/index"
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
+    "van-stepper": "@vant/weapp/stepper/index",
+    "van-submit-bar": "@vant/weapp/submit-bar/index"
   }
 }

@@ -7,6 +7,7 @@
   header5 
 </view>
 <van-notice-bar
+  left-icon="volume-o"
   text="大促销,搞活动了~~"
 >
   <van-icon slot="right-icon" name="arrow-down" color="#ed6a0c"></van-icon> 
@@ -16,23 +17,68 @@
   <scroll-view 
     class="h-full w-24" 
     scroll-y
+    scroll-with-animation
+    scroll-into-view="{{aside_id}}"
   >
     <view 
       wx:for="{{categoryList}}" 
       wx:key="index"
       data-id="{{item.id}}"
-      class="text-center py-3 {{item.id === current_id ? 'bg-white' : ''}}"
+      data-index="{{index}}"
+      class="flex flex-nowrap border-l-4 border-solid {{index === active_index ? 'bg-white border-red-500' : 'border-slate-50'}}"
       bind:tap="selectCategory"
+      id="aside{{item.id}}"
     >
-      {{item.name}}
+      <view 
+        data-id="{{item.id}}"
+        data-index="{{index}}"
+        class="py-3 text-center flex-1">{{item.name}}</view>
+      <view wx:if="{{item.number}}" class="self-start h-4 px-1 flex items-center text-xs rounded-full text-white bg-red-600">{{item.number}}</view>
     </view>
   </scroll-view>
 
   <!-- 商品列表 -->
   <scroll-view 
-    class="h-full bg-white flex-1 goods-list" 
+    class="h-full bg-white flex-1 group-list" 
     scroll-y
+    scroll-with-animation
+    scroll-into-view="{{current_id}}"
   >
-    <group wx:for="{{goodsList}}" wx:key="index" data="{{item}}" data-title="{{item.title}}" class=".group-item"></group>
+    <view class="group-item" wx:for="{{goodsList}}" wx:key="index" wx:for-item="group" id="{{group.id}}" data-id="{{group.id}}" data-index="{{index}}" data-title="{{group.title}}" >
+      <group 
+        data="{{group}}"
+        bind:change-num="chaneNum"
+      ></group> 
+    </view>
   </scroll-view>
 </view>
+<view style="height:50px;"></view>
+<van-submit-bar
+  disabled="{{!checkedNumber}}"
+  price="{{ priceSum }}"
+  button-text="结算"
+  label=" "
+>
+  <van-icon bind:click="toggleCheckedModel" info="{{checkedNumber ||''}}" size="32" name="bag-o" color="var(--button-danger-background-color,#ee0a24)" />
+</van-submit-bar>
+<view class="safe-area-inset-bottom"></view>
+<van-popup 
+  show="{{ showCheckedGoods }}" 
+  position="bottom"
+  round
+  z-index="99"
+  safe-area-tab-bar
+  custom-style="max-height: 60%"
+  bind:close="closeCheckedModel"
+>
+  <view class="px-4 py-3">
+    <view wx:for="{{checkedGoods}}" wx:key="index" class="py-3">
+      <view class=" text-gray-900">{{item.title}}</view>
+      <view class="text-gray-600 text-sm">{{item.describe}}</view>
+      <view class="flex justify-between items-center">
+        <view class="text-red-500 font-bold">￥{{item.price / 100}}</view>
+        <van-stepper integer step="{{1}}" min="{{0}}" input-width="24" button-size="18" theme="round" value="{{ item.number }}" bind:change="onChange" data-id="{{item.id}}" data-index="{{index}}" />
+      </view>
+    </view>
+  </view>
+</van-popup>
