@@ -12,8 +12,10 @@
     <view class="font-bold">收货地址</view>
   </view>
 
+  <view bind:tap="chngeExpanded">{{expanded ? '关闭' : '打开'}}</view>
+
   <!-- 商品 -->
-   <collapse title="商品列表" defaultExpanded>
+   <collapse expanded="{{expanded}}">
     <view class="px-4 py-3 bg-white">
       <view wx:for="{{goodsList}}" wx:key="index" class="py-3">
         <view class=" text-gray-900">{{item.title}}</view>

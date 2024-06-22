@@ -17,9 +17,15 @@ const goodsList = categoryList.map(item=>{
 Page({
   data:{
     sumer_price:1000,
-    goodsList:goodsList.flat()
+    goodsList:goodsList.flat(),
+    expanded:true,
   },
   navBack(){
     wx.navigateBack()
+  },
+  chngeExpanded(){
+    this.setData({
+      expanded:!this.data.expanded
+    })
   }
 })

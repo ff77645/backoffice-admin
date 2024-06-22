@@ -1,8 +1,7 @@
 <wxs src="/miniprogram_npm/@vant/weapp/wxs/utils.wxs" module="utils" />
-
-<view class="custom-class van-collapse {{ border ? 'van-hairline--top-bottom' : '' }}">
+<view class="custom-class van-collapse">
   <view class="van-collapse-item custom-class van-hairline--top">
-    <van-cell
+    <!-- <van-cell
       size="{{ size }}"
       title="{{ title }}"
       title-class="title-class"
@@ -31,13 +30,14 @@
         name="right-icon"
         slot="right-icon"
       />
-    </van-cell>
+    </van-cell> -->
     <view
       class="{{ utils.bem('collapse-item__wrapper') }}"
       style="height: 0;"
       animation="{{ animation }}"
     >
       <view
+        wx:if="{{inited}}"
         class="van-collapse-item__content content-class"
       >
         <slot />

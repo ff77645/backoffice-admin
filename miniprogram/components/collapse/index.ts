@@ -19,35 +19,34 @@ Component({
       type: Boolean,
       value: true,
     },
-    defaultExpanded:{
+    expanded:{
       type: Boolean,
       value: false,
     },
   },
   data:{
-    expanded: false,
+    // expanded: false,
+    inited:false
+  },
+  observers:{
+    expanded(val){
+      if(!this.data.inited){
+        val ? this.init() : ''
+        return
+      }
+      setContentAnimate(this,val,true)
+    }
   },
   methods:{
-    updateExpanded() {
-      if (this.data.expanded) {
-        setContentAnimate(this, this.data.expanded, true);
-      }
-    },
-
-    onClick() {
-      if (this.data.disabled) {
-        return;
-      }
-      const { expanded } = this.data;
-      const val = !expanded
-      this.setData({expanded:val})
-      setContentAnimate(this, val, true);
-    },
+    init(){
+      this.setData({
+        inited:true
+      },()=>{
+        setContentAnimate(this,this.data.expanded,true)
+      })
+    }
   },
   lifetimes:{
-    attached(){
-      // this.updateExpanded();
-      this.data.defaultExpanded && this.onClick()
-    }
+   
   }
 })
