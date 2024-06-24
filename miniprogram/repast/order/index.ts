@@ -169,6 +169,9 @@ Page({
       priceSum
     })
   },
+  fetchDraftData(){
+      
+  },
   async initData(){
     const productRes = await getAllProduct({page:1,limit:1000})
     const categoryRes = await getAllProductCategory()
