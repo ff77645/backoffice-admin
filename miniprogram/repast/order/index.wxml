@@ -27,7 +27,7 @@
       data-index="{{index}}"
       class="flex flex-nowrap border-l-4 border-solid {{index === active_index ? 'bg-white border-red-500' : 'border-slate-50'}}"
       bind:tap="selectCategory"
-      id="aside{{item.id}}"
+      id="a{{item.id}}"
     >
       <view 
         data-id="{{item.id}}"
@@ -44,7 +44,7 @@
     scroll-with-animation
     scroll-into-view="{{current_id}}"
   >
-    <view class="group-item" wx:for="{{goodsList}}" wx:key="index" wx:for-item="group" id="{{group.id}}" data-id="{{group.id}}" data-index="{{index}}" data-title="{{group.title}}" >
+    <view class="group-item" wx:for="{{goodsList}}" wx:key="index" wx:for-item="group" id="c{{group.id}}" data-id="{{group.id}}" data-index="{{index}}" data-title="{{group.title}}" >
       <group 
         data="{{group}}"
         bind:change-num="chaneNum"
@@ -76,7 +76,7 @@
       <view class=" text-gray-900">{{item.title}}</view>
       <view class="text-gray-600 text-sm">{{item.describe}}</view>
       <view class="flex justify-between items-center">
-        <view class="text-red-500 font-bold">￥{{item.price / 100}}</view>
+        <view class="text-red-500 font-bold">￥{{item.retail_price / 100}}</view>
         <van-stepper 
           integer 
           step="{{1}}" 

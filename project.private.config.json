@@ -3,7 +3,8 @@
   "projectname": "backoffice-admin",
   "setting": {
     "compileHotReLoad": false,
-    "preloadBackgroundData": false
+    "preloadBackgroundData": false,
+    "urlCheck": false
   },
   "condition": {
     "miniprogram": {
