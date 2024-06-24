@@ -1,8 +1,8 @@
 import {debounce} from '../../utils/index'
-interface Category {
-  id:string,
-  name:string
-}
+// interface Category {
+//   id:string,
+//   name:string
+// }
 
 const categoryList = Array.from({length:10}).map((_,index)=>({
   id:`id${index}`,
@@ -58,7 +58,6 @@ Page({
   },
   selectCategory({target}:any){
     console.log(target);
-    
     this.setData({
       active_index:target.dataset.index,
       current_id:target.dataset.id
@@ -78,8 +77,6 @@ Page({
   },
   initObserver(){
     const updateFn = debounce(this.updateActiveIndex,300)
-    console.log({updateFn});
-    
     wx.createIntersectionObserver(this,{
       observeAll:true,
       thresholds:[0,.2,.4,.6,.8,1],
@@ -87,15 +84,12 @@ Page({
     .relativeTo('.group-list')
     .relativeToViewport()
     .observe('.group-item',(res)=>{
-      // console.log(res);
       if(this.isPause) return
       const {
-        title,
         index,
       } = res.dataset
       const rat = res.intersectionRatio
-      // console.log(title,rat);
-      // if(rat < 0.1) return
+
       this.ratioArr[index] = rat
       const arr:any = Array.from(this.ratioArr).map(i=>i || 0).slice()
       const max = Math.max(...arr)
@@ -106,40 +100,64 @@ Page({
       updateFn(active_index)
     })
   },
-  chaneNum({detail}:any){
+  onChange({target,detail}:any){
+    this.chaneNum({
+      detail:{
+        ...target.dataset,
+        value:detail,
+      }
+    })
+  },
+  chaneNum({detail}:{detail:{
+    id:string,
+    category_id:string,
+    value:number
+  }}){
     console.log({detail});
     const {goodsList,checkedGoods,categoryList} = this.data
-    const i = goodsList.findIndex(i=>i.id === detail.category_id)
-    const goods = goodsList[i].children[detail.index]
+    const groupIndex = goodsList.findIndex(i=>i.id === detail.category_id)
+    const goodsIndex = goodsList[groupIndex].children.findIndex((i:any)=>i.id === detail.id)
+    const goods = goodsList[groupIndex].children[goodsIndex]
     goods.number = detail.value
 
-    // 已选中商品
-    const new_checkedGoods:any = checkedGoods.filter((i:any)=>i.id !== goods.id)
-    new_checkedGoods.push(goods)
+    // 更新已选中商品
+    const chekcedIndex = checkedGoods.findIndex((i:any)=>i.id === goods.id)
+    console.log({chekcedIndex,goods});
+    if(chekcedIndex === -1){
+      (checkedGoods as any).push(goods)
+    }else{
+      if(goods.number > 0){
+        (checkedGoods as any)[chekcedIndex].number = goods.number
+      }else{
+        checkedGoods.splice(chekcedIndex,1)
+      }
+    }
 
-    // 统计总数
+    // 统计总数 价格
     let checkedNumber = 0
     let priceSum = 0
-    new_checkedGoods.forEach(i=>{
+    checkedGoods.forEach((i:any)=>{
       checkedNumber += i.number
       priceSum += i.number * i.price
     })
 
-    // 更新分类
-    categoryList.forEach(i=>{
-      let number = 0
-      new_checkedGoods.forEach(g=>{
-        if(g.category_id === i.id){
-          number += g.number
-        }
-      })
-      i.number = number
+    // 更新商品选中数量
+    const categoryIndex = categoryList.findIndex((i:any)=>i.id === detail.category_id)
+    const goodskey = `goodsList[${groupIndex}].children[${goodsIndex}].number`
+
+    // 更新分类选中数量
+    const categoryKey = `categoryList[${categoryIndex}].number`
+    let categoryNumber = 0
+    checkedGoods.forEach((g:any)=>{
+      if(g.category_id === detail.category_id){
+        categoryNumber += g.number
+      }
     })
 
     this.setData({
-      goodsList,
-      checkedGoods:new_checkedGoods,
-      categoryList,
+      [goodskey]:detail.value,
+      [categoryKey]:categoryNumber,
+      checkedGoods,
       checkedNumber,
       priceSum
     })

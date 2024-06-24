@@ -1,6 +1,6 @@
 <wxs src="/miniprogram_npm/@vant/weapp/wxs/utils.wxs" module="utils" />
 <view class="custom-class van-collapse">
-  <view class="van-collapse-item custom-class van-hairline--top">
+  <view class="van-collapse-item custom-class">
     <!-- <van-cell
       size="{{ size }}"
       title="{{ title }}"
@@ -39,6 +39,7 @@
       <view
         wx:if="{{inited}}"
         class="van-collapse-item__content content-class"
+        style="padding:0;font-size:inherit;"
       >
         <slot />
       </view>

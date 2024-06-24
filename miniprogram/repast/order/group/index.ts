@@ -39,7 +39,6 @@ Component({
   lifetimes:{
     attached(){
       // this.initObserver()
-      this.initOffset()
     }
   }
 })

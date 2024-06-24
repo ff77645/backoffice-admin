@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '/miniprogram_npm/@vant/weapp/common/index.wxss';
+
 page,
 view,
 text,

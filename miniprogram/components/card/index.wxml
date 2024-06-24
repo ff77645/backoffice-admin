@@ -1,0 +1,7 @@
+<view class="bg-white px-3 rounded-md">
+  <view wx:if="{{header}}" class="py-2 text-ellipsis overflow-hidden whitespace-nowrap text-gray-800">{{header}}</view>
+  <view class="body-class py-2">
+    <slot></slot>
+  </view>
+  <view wx:if="{{footer}}" class="py-2 text-ellipsis overflow-hidden whitespace-nowrap text-gray-800">{{header}}</view>
+</view> 

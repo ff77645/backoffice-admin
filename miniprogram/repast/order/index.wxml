@@ -72,12 +72,24 @@
   bind:close="closeCheckedModel"
 >
   <view class="px-4 py-3">
-    <view wx:for="{{checkedGoods}}" wx:key="index" class="py-3">
+    <view wx:for="{{checkedGoods}}" wx:key="id" class="py-3">
       <view class=" text-gray-900">{{item.title}}</view>
       <view class="text-gray-600 text-sm">{{item.describe}}</view>
       <view class="flex justify-between items-center">
         <view class="text-red-500 font-bold">￥{{item.price / 100}}</view>
-        <van-stepper integer step="{{1}}" min="{{0}}" input-width="24" button-size="18" theme="round" value="{{ item.number }}" bind:change="onChange" data-id="{{item.id}}" data-index="{{index}}" />
+        <van-stepper 
+          integer 
+          step="{{1}}" 
+          min="{{0}}" 
+          input-width="24" 
+          button-size="18" 
+          theme="round" 
+          value="{{ item.number }}" 
+          bind:change="onChange" 
+          data-id="{{item.id}}" 
+          data-index="{{index}}"
+          data-category_id="{{item.category_id}}"
+        />
       </view>
     </view>
   </view>

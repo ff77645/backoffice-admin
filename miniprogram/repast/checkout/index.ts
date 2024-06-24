@@ -13,12 +13,14 @@ const goodsList = categoryList.map(item=>{
     number:0,
     price:Math.ceil(Math.random() * 5000)
   }))
-})
+}).flat()
 Page({
   data:{
     sumer_price:1000,
     goodsList:goodsList.flat(),
-    expanded:true,
+    expanded:false,
+    goodsListPart1:goodsList.slice(0,3),
+    goodsListPart2:goodsList.slice(3),
   },
   navBack(){
     wx.navigateBack()
