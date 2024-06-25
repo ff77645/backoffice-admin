@@ -9,3 +9,12 @@ export const debounce = (fn:Function,interval:number)=>{
     },interval)
   }
 }
+
+export const throttle = (fn:Function,interval:number)=>{
+    let time = Date.now()
+    return (...args:any[])=>{
+        if(Date.now() - time < interval) return
+        time = Date.now()
+        fn(...args)
+    }
+}

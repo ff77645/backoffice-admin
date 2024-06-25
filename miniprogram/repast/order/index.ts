@@ -1,4 +1,4 @@
-import {debounce} from '../../utils/index'
+import {debounce,throttle} from '../../utils/index'
 import {
     getAllProduct,
     getAllProductCategory,
@@ -182,7 +182,10 @@ Page({
       data.customer_id = this.data.customer.id
     }
     const draftData = await findOneDraft(data)
+
     console.log('fetchDraftDataForId',draftData);
+    if(!draftData) return
+    this._draftBill = draftData
     const chekcedGoods = draftData.items
     this.updatePageData(chekcedGoods)
   },
@@ -233,8 +236,11 @@ Page({
   //   新增商品
   addingProducts:[],
   createDrafting:false,
+  pushProductTime:Date.now(),
   async pushProduct(goods){
     console.log('pushProduct',goods);
+    if(Date.now() - this.pushProductTime < 500) return
+    this.pushProductTime = Date.now()
     if(this.createDrafting) return console.warn('正在创建 Draft');
     if(!this._draftBill.id){
       this.createDrafting = true
@@ -262,7 +268,7 @@ Page({
       this.addingProducts = this.addingProducts.filter(i=>i!==data)
       console.warn('pushProduct','移除商品',data);
     })
-    await this.fetchDraftDataDebounce()
+    await this.fetchDraftDataForId()
   },
 
   async removeProduct(goods){
