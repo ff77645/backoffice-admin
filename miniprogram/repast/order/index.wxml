@@ -42,12 +42,21 @@
     class="h-full bg-white flex-1 group-list" 
     scroll-y
     scroll-with-animation
-    scroll-into-view="{{current_id}}"
+    scroll-into-view="{{group_id}}"
   >
-    <view class="group-item" wx:for="{{goodsList}}" wx:key="index" wx:for-item="group" id="c{{group.id}}" data-id="{{group.id}}" data-index="{{index}}" data-title="{{group.title}}" >
+    <view 
+      class="group-item" 
+      wx:for="{{groupList}}" 
+      wx:key="index" 
+      wx:for-item="group" 
+      id="g{{group.id}}" 
+      data-id="{{group.id}}" 
+      data-index="{{index}}" 
+      data-title="{{group.title}}" 
+    >
       <group 
         data="{{group}}"
-        bind:change-num="chaneNum"
+        bind:change-num="changeNumber"
       ></group> 
     </view>
   </scroll-view>
@@ -76,7 +85,7 @@
       <view class=" text-gray-900">{{item.title}}</view>
       <view class="text-gray-600 text-sm">{{item.describe}}</view>
       <view class="flex justify-between items-center">
-        <view class="text-red-500 font-bold">￥{{item.retail_price / 100}}</view>
+        <view class="text-red-500 font-bold">￥{{item.unit_price / 100}}</view>
         <van-stepper 
           integer 
           step="{{1}}" 
@@ -86,7 +95,7 @@
           theme="round" 
           value="{{ item.number }}" 
           bind:change="onChange" 
-          data-id="{{item.id}}" 
+          data-id="{{item.product_id}}" 
           data-index="{{index}}"
           data-category_id="{{item.category_id}}"
         />

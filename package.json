@@ -21,6 +21,7 @@
   "dependencies": {
     "@vant/area-data": "^1.5.1",
     "@vant/weapp": "^1.11.6",
+    "miniprogram-computed": "^5.0.0",
     "tdesign-miniprogram": "^1.4.2"
   }
 }

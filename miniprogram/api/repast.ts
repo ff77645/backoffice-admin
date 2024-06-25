@@ -8,16 +8,16 @@ export const getAllProductCategory = ()=>{
     return request.get('/api/product/category')
 }
 // 创建点餐单据
-export const createDraft = ()=>{
-    return request.post('/api/repast/draft')
+export const createDraft = (data)=>{
+    return request.post('/api/repast/draft',data)
 }
 // 查询点餐单据
 export const findOneDraft = params =>{
     return request.get('/api/repast/draft',{params})
 }
 // 添加商品
-export const addDraftItem = (id,data)=>{
-    return request.post(`/api/repast/draft/item/${id}`,data)
+export const addDraftItem = (data)=>{
+    return request.post(`/api/repast/draft/item`,data)
 }
 // 更新商品
 export const patchDraftItem = (id,data)=>{
