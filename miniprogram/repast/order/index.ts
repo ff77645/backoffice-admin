@@ -8,6 +8,10 @@ import {
     patchDraftItem,
     removeDraftItem,
 } from '../../api/repast'
+import {
+  packageApi,
+  packageCategoryApi,
+} from '../../api/product'
 
 
 Page({
@@ -28,13 +32,13 @@ Page({
   },
   ratioArr:[] as any,
   isPause:false,
-  goodsList:[],
+  goodsListRaw:[],
   updatePageData(checkedGoods:any){
     const {categoryList} = this.data
 
     // 更新商品数据
-    const _goodsList = this.goodsList.map((i:any)=>{
-      const goods = checkedGoods.find((g:any)=>g.product_id === i.id)
+    const _goodsList = this.goodsListRaw.map((i:any)=>{
+      const goods = checkedGoods.find((g:any)=>  (g.package_id || g.product_id) === i.id)
       const number = goods ? goods.number : 0
       return {
         ...i,
@@ -44,36 +48,36 @@ Page({
     const groupList:any = categoryList.map((item:any)=>{
       const children = _goodsList.filter(i=>i.category_id === item.id)
       return {
-        title:item.name,
+        title:item.title,
         id:item.id,
         children
       }
-  })
+    })
 
-  // 更新分类数量
-  let categoryNumber:Record<string,number> = {}
-  categoryList.forEach((item:any)=>{
-    item.number = categoryNumber[item.id] || checkedGoods.filter(i=>i.category_id === item.id).reduce((number,i)=>{
-      return number + i.number
-    },0)
-    categoryNumber[item.id] = item.number
-  })
+    // 更新分类数量
+    let categoryNumber:Record<string,number> = {}
+    categoryList.forEach((item:any)=>{
+      item.number = categoryNumber[item.id] || checkedGoods.filter(i=>i.category_id === item.id).reduce((number,i)=>{
+        return number + i.number
+      },0)
+      categoryNumber[item.id] = item.number
+    })
 
-  // 总数 总价
-  let priceSum = 0
-  let checkedNumber = 0
-  checkedGoods.forEach(i=>{
-    priceSum += i.number * i.unit_price
-    checkedNumber += i.number
-  })
+    // 总数 总价
+    let priceSum = 0
+    let checkedNumber = 0
+    checkedGoods.forEach(i=>{
+      priceSum += i.number * i.unit_price
+      checkedNumber += i.number
+    })
 
-  this.setData({
-    priceSum,
-    checkedNumber,
-    checkedGoods,
-    groupList,
-    categoryList,
-  })
+    this.setData({
+      priceSum,
+      checkedNumber,
+      checkedGoods,
+      groupList,
+      categoryList,
+    })
   },
   toggleCheckedModel(){
     const {checkedNumber,showCheckedGoods} = this.data
@@ -131,7 +135,7 @@ Page({
       const max = Math.max(...arr)
       const active_index = arr.indexOf(max)
       // console.log({
-      //   arr,max,c_index,rat,title,index
+      //   arr,max
       // });
       updateFn(active_index)
     })
@@ -152,11 +156,11 @@ Page({
   }}){
     console.log({detail});
     const {checkedGoods} = this.data
-    const goodsIndex = this.goodsList.findIndex((i:any)=>i.id === detail.id)
-    const goods = this.goodsList[goodsIndex]
+    const goodsIndex = this.goodsListRaw.findIndex((i:any)=>i.id === detail.id)
+    const goods = this.goodsListRaw[goodsIndex]
     goods.number = detail.value
     
-    const chekcedIndex = checkedGoods.findIndex((i:any)=>i.product_id === goods.id)
+    const chekcedIndex = checkedGoods.findIndex((i:any)=>(i.package_id || i.product_id) === goods.id)
     // console.log({chekcedIndex,goods});
     if(chekcedIndex === -1){
       this.pushProduct(goods)
@@ -193,28 +197,51 @@ Page({
 
   // 初始化分类与商品数据
   async initData(){
-    const categoryRes = await getAllProductCategory()
-    const productRes = await getAllProduct({page:1,limit:1000})
+    // const categoryRes = await getAllProductCategory()
+    // const productRes = await getAllProduct({page:1,limit:1000})
+    // const packages = await packageApi.findAll({page:1,limit:100})
+    // const packageCategory = await packageCategoryApi.findAll()
+
+    const [
+      categoryRes,
+      productRes,
+      packageCategory,
+      packages,
+    ] = await Promise.all([
+      getAllProductCategory(),
+      getAllProduct({page:1,limit:1000}),
+      packageCategoryApi.findAll(),
+      packageApi.findAll({page:1,limit:100}),
+    ])
+    console.log({packages,packageCategory});
+    
     this.fetchDraftDataForId()
-    categoryRes.forEach(i=>{
-        i.number = 0
-        i.name = i.title
-    })
-    productRes.data.forEach(i=>{
+
+    const categoryList = [...packageCategory,...categoryRes]
+    categoryList.forEach(i=>{i.number = 0})
+    console.log({categoryList});
+    
+    packages.data.forEach(i=>{ i.type = 'package' })
+    const allProducts = [...packages.data,...productRes.data]
+    allProducts.forEach(i=>{
       i.unit_price = i.retail_price
       i.number = 0
     })
-    const groupList = categoryRes.map(item=>{
-        return {
-            title:item.name,
-            id:item.id,
-            children:productRes.data.filter(i=>i.category_id === item.id)
-        }
+    const groupList = categoryList.map(item=>{
+      return {
+        title:item.title,
+        id:item.id,
+        children:allProducts.filter(i=>i.category_id === item.id)
+      }
     })
-    this.goodsList = productRes.data
+    console.log({groupList});
+    
+    this.goodsListRaw = allProducts
     this.setData({
         groupList,
-        categoryList:categoryRes,
+        categoryList,
+    },()=>{
+      this.initObserver()
     })
     console.log({productRes,categoryRes});
   },
@@ -249,15 +276,21 @@ Page({
       })
       this._draftBill = res
     }
-    const data = {
+    const data:any = {
       repast_draft_id:this._draftBill.id,
-      product_id:goods.id,
+      // product_id:goods.id,
+      // package_id:goods.id,
       title:goods.title,
       unit_price:goods.unit_price,
       number:goods.number,
       guides:goods.guides,
       remark:goods.remark,
       category_id:goods.category_id,
+    }
+    if(goods.type === 'package'){
+      data.package_id = goods.id
+    }else{
+      data.product_id = goods.id
     }
     const hasAddingProduct = this.addingProducts.find(i=>i.product_id === data.product_id && i.guides === data.guides)
     if(hasAddingProduct) return console.warn('重复添加');
@@ -276,7 +309,7 @@ Page({
     await this.fetchDraftDataDebounce()
   },
   onLoad(){
-    this.initObserver()
+    
     this.initData()
   },
   navBack(){
