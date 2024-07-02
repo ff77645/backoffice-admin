@@ -190,7 +190,7 @@ Page({
     console.log('fetchDraftDataForId',draftData);
     if(!draftData) return
     this._draftBill = draftData
-    const chekcedGoods = draftData.items
+    const chekcedGoods = draftData.items.sort((a,b)=>new Date(a.created_at) - new Date(b.created_at))
     this.updatePageData(chekcedGoods)
   },
 
@@ -213,7 +213,7 @@ Page({
       packageCategoryApi.findAll(),
       packageApi.findAll({page:1,limit:100}),
     ])
-    console.log({packages,packageCategory});
+    // console.log({packages,packageCategory});
     
     this.fetchDraftDataForId()
 
@@ -265,7 +265,7 @@ Page({
   createDrafting:false,
   pushProductTime:Date.now(),
   async pushProduct(goods){
-    console.log('pushProduct',goods);
+    // console.log('pushProduct',goods);
     if(Date.now() - this.pushProductTime < 500) return
     this.pushProductTime = Date.now()
     if(this.createDrafting) return console.warn('正在创建 Draft');

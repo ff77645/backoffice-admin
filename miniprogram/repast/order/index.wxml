@@ -88,6 +88,7 @@
         <view class="text-red-500 font-bold">￥{{item.unit_price / 100}}</view>
         <van-stepper 
           integer 
+          async-change
           step="{{1}}" 
           min="{{0}}" 
           input-width="24" 
@@ -95,8 +96,8 @@
           theme="round" 
           value="{{ item.number }}" 
           bind:change="onChange" 
-          data-id="{{item.product_id}}" 
-          data-index="{{index}}"
+          data-id="{{item.package_id || item.product_id}}" 
+          data-index="{{index}}" 
           data-category_id="{{item.category_id}}"
         />
       </view>
