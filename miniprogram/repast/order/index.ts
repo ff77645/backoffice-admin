@@ -7,6 +7,7 @@ import {
     addDraftItem,
     patchDraftItem,
     removeDraftItem,
+    repastBillApi,
 } from '../../api/repast'
 import {
   packageApi,
@@ -33,13 +34,26 @@ Page({
   ratioArr:[] as any,
   isPause:false,
   goodsListRaw:[],
+
+ async onSubmit(){
+   if(!this._draftBill.id) return
+   if(!this.data.checkedGoods.length) return
+  //  const repast_bill = await repastBillApi.create({
+  //   repast_draft_id:this._draftBill.id
+  //  })
+  //  console.log({repast_bill});
+   wx.navigateTo({
+     url:'/repast/checkout/index?repast_draft_id='+this._draftBill.id
+   })
+ },
+
   updatePageData(checkedGoods:any){
     const {categoryList} = this.data
 
     // 更新商品数据
     const _goodsList = this.goodsListRaw.map((i:any)=>{
       const goods = checkedGoods.find((g:any)=>  (g.package_id || g.product_id) === i.id)
-      const number = goods ? goods.number : 0
+      const number = goods ? goods.number : 0 
       return {
         ...i,
         number
@@ -203,7 +217,7 @@ Page({
     // const packageCategory = await packageCategoryApi.findAll()
 
     const [
-      categoryRes,
+      productCategory,
       productRes,
       packageCategory,
       packages,
@@ -217,11 +231,14 @@ Page({
     
     this.fetchDraftDataForId()
 
-    const categoryList = [...packageCategory,...categoryRes]
+    const categoryList = [...packageCategory,...productCategory]
     categoryList.forEach(i=>{i.number = 0})
-    console.log({categoryList});
     
-    packages.data.forEach(i=>{ i.type = 'package' })
+    packages.data.forEach(i=>{ 
+      i.type = 'package'
+      i.groups = JSON.parse(i.groups)
+      i.isOptional = i.groups.length && i.groups.some(i=>i.total !== i.optional)
+     })
     const allProducts = [...packages.data,...productRes.data]
     allProducts.forEach(i=>{
       i.unit_price = i.retail_price
@@ -234,16 +251,15 @@ Page({
         children:allProducts.filter(i=>i.category_id === item.id)
       }
     })
-    console.log({groupList});
+    // console.log({groupList});
     
     this.goodsListRaw = allProducts
-    this.setData({
+    this.setData({ 
         groupList,
         categoryList,
     },()=>{
       this.initObserver()
     })
-    console.log({productRes,categoryRes});
   },
 
 // 更新商品  
@@ -292,14 +308,12 @@ Page({
     }else{
       data.product_id = goods.id
     }
-    const hasAddingProduct = this.addingProducts.find(i=>i.product_id === data.product_id && i.guides === data.guides)
+    const hasAddingProduct = this.addingProducts.find(i=>i.product_id === data.package_id && i.package_id === data.product_id && i.guides === data.guides)
     if(hasAddingProduct) return console.warn('重复添加');
     this.addingProducts.push(data)
-    console.log('pushProduct','添加商品',data);
     
     await addDraftItem(data).finally(()=>{
       this.addingProducts = this.addingProducts.filter(i=>i!==data)
-      console.warn('pushProduct','移除商品',data);
     })
     await this.fetchDraftDataForId()
   },

@@ -1,0 +1,13 @@
+<van-nav-bar
+  title="套餐选择"
+  left-arrow
+  bind:click-left="navBack"
+/>
+<view>
+  <view class="h-20">
+    图片详情区域
+  </view>
+  <view>
+    
+  </view>
+</view>

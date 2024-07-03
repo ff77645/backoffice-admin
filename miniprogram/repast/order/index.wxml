@@ -65,8 +65,9 @@
 <van-submit-bar
   disabled="{{!checkedNumber}}"
   price="{{ priceSum }}"
-  button-text="结算"
+  button-text="下单"
   label=" "
+  bind:submit="onSubmit"
 >
   <van-icon bind:click="toggleCheckedModel" info="{{checkedNumber ||''}}" size="32" name="bag-o" color="var(--button-danger-background-color,#ee0a24)" />
 </van-submit-bar>

@@ -1,4 +1,7 @@
 import {request} from '../utils/request/index'
+import {RestApi} from './rest-api'
+
+export const repastBillApi = new RestApi('/repast/bill')
 
 export const getAllProduct = (params:any)=>{
     return request.get('/product/info',{params})
@@ -27,4 +30,6 @@ export const patchDraftItem = (id,data)=>{
 export const removeDraftItem = (id)=>{
     return request.delete(`/repast/draft/item/${id}`)
 }
+
+
 

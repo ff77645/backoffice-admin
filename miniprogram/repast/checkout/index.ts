@@ -1,3 +1,8 @@
+import { 
+  repastBillApi,
+  findOneDraft
+ } from '../../api/repast'
+
 const categoryList = Array.from({length:10}).map((_,index)=>({
   id:`id${index}`,
   name:`类别${index}`,
@@ -14,13 +19,23 @@ const goodsList = categoryList.map(item=>{
     price:Math.ceil(Math.random() * 5000)
   }))
 }).flat()
+
 Page({
   data:{
     sumer_price:1000,
-    goodsList:goodsList.flat(),
     expanded:false,
-    goodsListPart1:goodsList.slice(0,3),
-    goodsListPart2:goodsList.slice(3),
+    goodsListPart1:[],
+    goodsListPart2:[],
+  },
+
+  async findOneDraft(id){
+    const res = await findOneDraft({id})
+    const goodsListPart1 = res.items.slice(0,3)
+    const goodsListPart2 = res.items.slice(3)
+    this.setData({goodsListPart1,goodsListPart2})
+  },
+  onLoad({repast_draft_id}){
+    this.findOneDraft(repast_draft_id)
   },
   navBack(){
     wx.navigateBack()

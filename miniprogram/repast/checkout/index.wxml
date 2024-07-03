@@ -23,23 +23,21 @@
           <view class=" text-gray-900">{{item.title}}</view>
           <view class="text-gray-600 text-sm">{{item.describe}}</view>
           <view class="flex justify-between items-center">
-            <view class="text-red-500 font-bold">￥{{item.price / 100}}</view>
-            <van-stepper wx:if="{{item.number}}" integer step="{{1}}" min="{{0}}" input-width="24" button-size="18" theme="round" value="{{ item.number }}" bind:change="onChange" data-id="{{item.id}}" data-index="{{index}}" />
-            <van-icon wx:else name="add" color="#ee0a24" data-id="{{item.id}}" data-index="{{index}}" size="20" bind:click="onAdd"></van-icon>
+            <view class="text-red-500 font-bold">￥{{item.unit_price / 100}}</view>
+            <view class="text-gray-700">x {{item.number}}</view>
           </view>
         </view>
         <collapse expanded="{{expanded}}">
-          <view wx:for="{{goodsList}}" wx:key="index" class="py-3">
+          <view wx:for="{{goodsListPart2}}" wx:key="index" class="py-3">
             <view class=" text-gray-900">{{item.title}}</view>
             <view class="text-gray-600 text-sm">{{item.describe}}</view>
             <view class="flex justify-between items-center">
-              <view class="text-red-500 font-bold">￥{{item.price / 100}}</view>
-              <van-stepper wx:if="{{item.number}}" integer step="{{1}}" min="{{0}}" input-width="24" button-size="18" theme="round" value="{{ item.number }}" bind:change="onChange" data-id="{{item.id}}" data-index="{{index}}" />
-              <van-icon wx:else name="add" color="#ee0a24" data-id="{{item.id}}" data-index="{{index}}" size="20" bind:click="onAdd"></van-icon>
+              <view class="text-red-500 font-bold">￥{{item.unit_price / 100}}</view>
+              <view class="text-gray-700">x {{item.number}}</view>
             </view>
           </view> 
         </collapse>
-        <view bind:tap="chngeExpanded" class="text-center py-2">{{expanded ? '关闭' : '打开'}}</view>
+        <view wx:if="{{goodsListPart2.length}}" bind:tap="chngeExpanded" class="text-center py-2">{{expanded ? '关闭' : '打开'}}</view>
       </view>
     </i-card>
   </view>

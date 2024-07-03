@@ -16,7 +16,8 @@
       "root":"repast",
       "pages":[
         "order/index",
-        "checkout/index"
+        "checkout/index",
+        "package-optional/index"
       ]
     }
   ],
