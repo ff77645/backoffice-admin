@@ -54,10 +54,20 @@
       data-index="{{index}}" 
       data-title="{{group.title}}" 
     >
-      <group 
+      <view class="px-4 group">
+        <view class="category-title text-sm text-gray-500 sticky top-0 bg-white" style="z-index: 100;" data-title="{{group.title}}">{{group.title}}</view>
+        <group-item
+          wx:for="{{group.children}}" 
+          wx:key="index" 
+          item="{{item}}"
+          bind:change="handleChange"
+        ></group-item>
+      </view>
+      <!-- <group 
         data="{{group}}"
         bind:change-num="changeNumber"
-      ></group> 
+        bind:change="handleChange"
+      ></group>  -->
     </view>
   </scroll-view>
 </view>
@@ -96,10 +106,8 @@
           button-size="18" 
           theme="round" 
           value="{{ item.number }}" 
-          bind:change="onChange" 
-          data-id="{{item.package_id || item.product_id}}" 
+          bind:change="changeCheckedProducts" 
           data-index="{{index}}" 
-          data-category_id="{{item.category_id}}"
         />
       </view>
     </view>

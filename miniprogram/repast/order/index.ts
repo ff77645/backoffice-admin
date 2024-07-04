@@ -129,6 +129,23 @@ Page({
       aside_id
     })
   },
+  observerCategoryTitle(){
+    // category-title
+    wx.createIntersectionObserver(this,{
+      observeAll:true,
+      thresholds:[0,.2,.4,.6,.8,1],
+    })
+    .relativeTo('.group-list')
+    .relativeToViewport()
+    .observe('.category-title',(res)=>{
+      // console.log({res});
+      const ratio = res.intersectionRatio
+      const {title} = res.dataset
+      if(ratio < 0.9) return
+      console.log(title,ratio.toFixed(3));
+      
+    })
+  },
   initObserver(){
     const updateFn = debounce(this.updateActiveIndex,300)
     wx.createIntersectionObserver(this,{
@@ -154,41 +171,27 @@ Page({
       updateFn(active_index)
     })
   },
-  onChange({target,detail}:any){
-    this.changeNumber({
-      detail:{
-        ...target.dataset,
-        value:detail,
-      }
-    })
+  changeCheckedProducts({target,detail}){
+    const {index} = target.dataset
+    const goods = this.data.checkedGoods[index]
+    if(!goods) return 
+    if(detail <= 0) return this.removeProduct(goods)
+    goods.number = detail
+    this.patchProduct(goods)
   },
-  privateCheckedGoods:[],
-  changeNumber({detail}:{detail:{
-    id:string,
-    category_id:string,
-    value:number
-  }}){
-    console.log({detail});
-    const {checkedGoods} = this.data
-    const goodsIndex = this.goodsListRaw.findIndex((i:any)=>i.id === detail.id)
-    const goods = this.goodsListRaw[goodsIndex]
-    goods.number = detail.value
-    
-    const chekcedIndex = checkedGoods.findIndex((i:any)=>(i.package_id || i.product_id) === goods.id)
-    // console.log({chekcedIndex,goods});
-    if(chekcedIndex === -1){
-      this.pushProduct(goods)
-    }else{
-      if(goods.number > 0){
-        (checkedGoods as any)[chekcedIndex].number = goods.number
-        this.patchProduct(checkedGoods[chekcedIndex])
-      }else{
-        this.removeProduct(checkedGoods[chekcedIndex])
-      }
+  handleChange({detail}){
+    console.log('handleChange',detail);
+    if(detail.type === 'add'){
+      this.pushProduct(detail.data)
+    }else if(detail.type === 'change'){
+      const goods = this.data.checkedGoods.find(i=>(i.package_id || i.product_id) === detail.data.id)
+      if(!goods) return
+      const number = detail.data.number
+      if(number <= 0) return this.removeProduct(goods)
+      goods.number = number
+      this.patchProduct(goods)
     }
-    // this.updatePageData(checkedGoods)
   },
-
 
   // 通过点餐单据id获取商品信息
   async fetchDraftDataForId(){
@@ -202,12 +205,11 @@ Page({
     const draftData = await findOneDraft(data)
 
     console.log('fetchDraftDataForId',draftData);
-    if(!draftData) return
+    if(!draftData) return this.createDraft()
     this._draftBill = draftData
     const chekcedGoods = draftData.items.sort((a,b)=>new Date(a.created_at) - new Date(b.created_at))
     this.updatePageData(chekcedGoods)
   },
-
 
   // 初始化分类与商品数据
   async initData(){
@@ -259,6 +261,7 @@ Page({
         categoryList,
     },()=>{
       this.initObserver()
+      this.observerCategoryTitle()
     })
   },
 
@@ -267,7 +270,6 @@ Page({
     await patchDraftItem(goods.id,goods)
     await this.fetchDraftDataDebounce()
   },
-
   _draftBill:{},
   fetchDraftDataTimeout:0,
   fetchDraftDataDebounce(){
@@ -280,22 +282,23 @@ Page({
   addingProducts:[],
   createDrafting:false,
   pushProductTime:Date.now(),
+  // 创建草稿单
+  async createDraft(){
+    this.createDrafting = true
+    const res = await createDraft({customer_id:this.data.customer.id}).finally(()=>{
+      this.createDrafting = false
+    })
+    this._draftBill = res
+  },
+  // 添加商品
   async pushProduct(goods){
     // console.log('pushProduct',goods);
     if(Date.now() - this.pushProductTime < 500) return
     this.pushProductTime = Date.now()
     if(this.createDrafting) return console.warn('正在创建 Draft');
-    if(!this._draftBill.id){
-      this.createDrafting = true
-      const res = await createDraft({customer_id:this.data.customer.id}).finally(()=>{
-        this.createDrafting = false
-      })
-      this._draftBill = res
-    }
+    if(!this._draftBill.id) await this.createDraft()
     const data:any = {
       repast_draft_id:this._draftBill.id,
-      // product_id:goods.id,
-      // package_id:goods.id,
       title:goods.title,
       unit_price:goods.unit_price,
       number:goods.number,
@@ -305,10 +308,11 @@ Page({
     }
     if(goods.type === 'package'){
       data.package_id = goods.id
+      data.package_optional = goods.package_optional
     }else{
       data.product_id = goods.id
     }
-    const hasAddingProduct = this.addingProducts.find(i=>i.product_id === data.package_id && i.package_id === data.product_id && i.guides === data.guides)
+    const hasAddingProduct = this.addingProducts.find(i=>i.product_id == data.package_id && i.package_id == data.product_id && i.guides === data.guides)
     if(hasAddingProduct) return console.warn('重复添加');
     this.addingProducts.push(data)
     
@@ -323,7 +327,6 @@ Page({
     await this.fetchDraftDataDebounce()
   },
   onLoad(){
-    
     this.initData()
   },
   navBack(){

@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "repast/package-optional/index",
+          "pathName": "repast/package-optional/index",
+          "query": "id=b3851aeb-df4c-4cf5-90aa-c221e8d2f333",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "repast/checkout/index",
           "pathName": "repast/checkout/index",
           "query": "",
